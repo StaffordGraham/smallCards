@@ -1,0 +1,108 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #2b7a2b;
+    margin: 0;
+    padding:0;
+}
+
+#table {
+    position: relative;
+    width: 100vw;
+    height: 100vh;   /* or whatever height you want */
+    margin: 0;
+    padding: 0;
+}
+
+
+.card {
+    width: 12vw;
+    height: 18vw;
+    max-width: 120px;
+    max-height: 180px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    border-radius: 1.2vw;
+   position: absolute;   /* required */
+    left: auto;           /* prevent override */
+    right: auto;          /* prevent override */
+    top: auto;
+    bottom: auto;
+    margin: 0;   
+
+
+
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    font-size: 2.2vw;
+}
+
+.cardBack {
+    width: 12vw;
+    height: 18vw;
+    position: absolute;
+    left: auto;           /* prevent override */
+    right: auto;          /* prevent override */
+    top: auto;
+    bottom: auto;
+    margin: 0;   
+    border-radius: 6px;
+    border: 0.1vw solid black;
+    box-sizing: border-box;
+
+    /* White outer margin */
+    background-color: white;
+    padding: 0.3vw;
+
+    /* Black border */
+    box-shadow: 0 0 0 0.4vw white inset;
+
+    /* Fournier-style geometric pattern */
+    
+    
+     /* Soft wave pattern */
+    background-image:
+        repeating-radial-gradient(
+            circle at 50% 50%,
+            #b00000 0,
+            #b00000 2px,
+            transparent 2px,
+            transparent 4px
+        );
+    background-size: 20px 20px;
+
+    background-clip: content-box;
+}
+
+/* Top-left corner */
+.card::before {
+    content: attr(data-rank) "\A" attr(data-suit);
+    white-space: pre;
+    position: absolute;
+  top: 0.15em;
+    left: 0.15em;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+/* Bottom-right corner */
+.card::after {
+    content: attr(data-rank) "\A " attr(data-suit);
+    white-space: pre;
+    position: absolute;
+    bottom: 0.15em;
+    right: 0.15em;
+    font-size: 2em;
+    font-weight: bold;
+    transform: rotate(180deg);
+}
+
+/* Suit colours */
+.card[data-suit="♥"],
+.card[data-suit="♦"] {
+    color: red;
+}
+
+.card[data-suit="♠"],
+.card[data-suit="♣"] {
+    color: black;
+}
