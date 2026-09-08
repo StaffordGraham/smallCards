@@ -24,11 +24,8 @@ body {
     border: 1px solid #ccc;
     border-radius: 1.2vw;
    position: absolute;   /* required */
-    left: auto;           /* prevent override */
-    right: auto;          /* prevent override */
-    top: auto;
-    bottom: auto;
     margin: 0;   
+    transform: none;
 
 
 
@@ -40,38 +37,23 @@ body {
     width: 12vw;
     height: 18vw;
     position: absolute;
-    left: auto;           /* prevent override */
-    right: auto;          /* prevent override */
-    top: auto;
-    bottom: auto;
-    margin: 0;   
     border-radius: 6px;
-    border: 0.1vw solid black;
-    box-sizing: border-box;
 
-    /* White outer margin */
+    /* Thin black outer edge */
+    border: 0.35vw solid black;
+
+    /* White printed border */
     background-color: white;
-    padding: 0.3vw;
-
-    /* Black border */
+    padding: 0.6vw;
     box-shadow: 0 0 0 0.4vw white inset;
 
-    /* Fournier-style geometric pattern */
-    
-    
-     /* Soft wave pattern */
-    background-image:
-        repeating-radial-gradient(
-            circle at 50% 50%,
-            #b00000 0,
-            #b00000 2px,
-            transparent 2px,
-            transparent 4px
-        );
-    background-size: 20px 20px;
-
+    /* Pointillist pink background */
+    background-image: radial-gradient(circle, white 10%, transparent 11%);
+    background-size: 4px 4px;
+    background-color: #ffb6c179; /* soft pink base */
     background-clip: content-box;
 }
+
 
 /* Top-left corner */
 .card::before {
@@ -106,3 +88,417 @@ body {
 .card[data-suit="♣"] {
     color: black;
 }
+
+body{
+	margin: 0;
+	padding: 0;
+  height: 100vh;
+	background-color: #0D5F37    ;
+	position: relative;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.tabledCard{ 
+  transition: left 0.5s ease, top 0.5s ease, transform 0.5s ease;
+}
+
+
+
+
+
+#trickControls {
+ position: fixed;
+    top: 70vh;                 /* 70% down the screen */
+    left: 50%;                 /* centre horizontally */
+    transform: translateX(-50%);
+    display: flex;             /* place buttons side by side */
+    gap: 8vw;                  /* responsive spacing */
+    z-index: 1500;     
+  }
+#trickControls.hidden {
+  display: none;
+  pointer-events: none;
+}
+
+
+
+.trickBtn{
+padding: 12px 24px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: #f7f7f7;
+    color: #222;
+    cursor: pointer;
+
+    transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.trickBtn:hover {
+    background: #eaeaea;
+}
+
+.trickBtn:active {
+    transform: scale(0.97);
+}
+
+
+
+
+
+#contractLabel{
+  position:absolute;
+  left: 200px;
+  font-size: medium;
+  font-weight: bold;
+  color: #eee;
+  background-color: #02652A;
+  width: 120px;
+}
+
+#nsTricks{
+ top: 20px;
+right: 20px;
+
+}
+#ewTricks{
+   bottom: 60px;
+    right: 20px;
+}
+
+.trickCounter{
+ position: absolute;
+    min-width: 140px;
+    height: 30px;
+    background-color: #0D5F37;
+    color: white;;
+    font-weight: normal;
+    font-size: 18px;
+    padding:6px 12px;
+        display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;   /* stays above cards */
+
+
+
+}
+#nsTricks {
+    top: 20px;
+    right: 20px;
+}
+
+#ewTricks {
+    top: 60px;
+    right: 20px;
+}
+
+
+
+
+.contract-info {
+    font-size: 1.4rem;
+    font-weight: bold;
+    background-color: #02652A;
+    color: white;
+    margin: 10px;
+}
+
+
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+#fileInput {
+  max-width: 100%;
+  background-color: snow;
+  box-sizing: border-box;
+}
+
+
+
+  
+
+
+
+
+
+
+#libraryScreen {
+ background: white; 
+ font-size: 1em;
+ padding: 20px; 
+ border-radius: 10px; /* Size: roughly one‑third of the screen */
+  width: 33vw; 
+  height: 33vh;
+  min-width: 320px; /* ensures it doesn't get too small */
+   box-shadow: 0 0 20px rgba(0,0,0,0.3); /* Make sure it sits above the overlay */ 
+   z-index: 1001; /* Optional: center content inside the modal */
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center;
+} 
+
+
+
+
+
+
+
+
+
+
+#welcomeScreen {
+ background: white; 
+ font-size: 1.5em;
+ padding: 20px; 
+ border-radius: 10px; /* Size: roughly one‑third of the screen */
+  width: 33vw; 
+  height: 33vh;
+  min-width: 320px; /* ensures it doesn't get too small */
+   max-width: 500px; /* optional: prevents it getting too wide */ /* Let height grow naturally with content */ 
+   box-shadow: 0 0 20px rgba(0,0,0,0.3); /* Make sure it sits above the overlay */ 
+   z-index: 1001; /* Optional: center content inside the modal */
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center;
+}
+
+#libraryTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 1.2em;
+  width: 800px;
+} 
+
+#libraryTable thead th{
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 2;
+}
+
+#libraryTable th, #libraryTable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+#libraryTable th {
+  background-color: #02652A;
+  color: black;
+}
+
+#libraryTable tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+.library-table-container {
+  max-height: 60vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+} 
+#contractScreen {
+ background: white; 
+ font-size: 1.5em;
+ padding: 20px; 
+ border-radius: 10px; /* Size: roughly one‑third of the screen */
+  width: 33vw; 
+  height: 33vh;
+  min-width: 320px; /* ensures it doesn't get too small */
+   max-width: 500px; /* optional: prevents it getting too wide */ /* Let height grow naturally with content */ 
+   box-shadow: 0 0 20px rgba(0,0,0,0.3); /* Make sure it sits above the overlay */ 
+   z-index: 1001; /* Optional: center content inside the modal */
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center;
+}
+
+#imageContainer{
+  position: relative;
+  min-height: 300px;
+  width: 100vw;
+  height: 100vh;
+}
+
+.library-modal {
+max-height: 80vh;
+overflow-y: auto;
+padding: 20px;
+position: relative;
+width: 1600px;
+}
+
+.hidden {
+  display: none !important;
+  pointer-events: none ;
+  
+} 
+
+/* Full-screen overlay */
+
+
+/* Hide element */
+
+/* Modal box */
+#scoreScreen {
+  width: 33vw;
+  height: 33vh;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Modal text */
+#scoreScreen p {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-top: 20px;
+}
+
+/* Continue button */
+#scoreScreen button {
+  align-self: flex-end;
+  padding: 10px 20px;
+  font-size: 1rem;
+}
+
+
+
+
+
+
+        
+
+.overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: #02652A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.selector-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 400px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  text-align: center;
+}
+
+.hand-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+}
+
+.hand-list li {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.hand-list li:hover,
+.hand-list li.selected {
+  background-color: #02652A;
+  color: white;
+}
+
+#labelContract{
+  position: fixed;
+  top: 5px;;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #02652A;
+  color: white;
+  font: 1em sans-serif;
+
+
+}
+
+
+
+
+
+/*The Modal bacground */
+
+
+
+/* Create a container for the top labels and align them */
+
+
+/* Styling for the top-left label */
+
+
+/* Styling for the contract label */
+#contract{
+	position: absolute;
+
+	top : 20;
+	left: 800;
+	top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+	width: 200px;
+	background-color: #02652A;
+	color: #fff;
+	padding: 5px 10px;
+}
+
+#arrow{
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translateX(-50%) rotate(0deg); /* arrow points up */  
+  width: 30px;
+  height:auto;
+}
+
+ 
+
+
+
+
+
+
+
+
+
+/* Styling for the top-right label */
+
+
+
+.handRow { display: flex; justify-content: space-between; align-items: center; } 
+.handRow span {
+  padding-right: 12px;
+  font-size: 1.5rem;
+}
+  ;
+.playButton { padding: 2px 4px; font-size: 0.9rem; }
+
+
+
+
+
+
+

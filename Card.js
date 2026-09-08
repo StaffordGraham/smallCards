@@ -18,7 +18,6 @@ class Card
 		this.suitNumber=Math.floor(cardNumber/13)
 		this.suitName = this.calculateSuitName(cardNumber)
 		this.suitSymbol=this.calculateSuitSymbol(cardNumber)
-		this.rankValue=cardNumber%13;
 		}
 	
 calculateName(cardNumber){
@@ -75,7 +74,7 @@ calculateFace(cardNumber){
 		faceName = "8";
 		break
 		case 7:
-			faceName=9;
+			faceName="9";
 			break
 		case 8:
 			faceName="T";

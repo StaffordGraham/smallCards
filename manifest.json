@@ -1,0 +1,16 @@
+{
+  "name": "Small Cards",
+  "short_name": "Cards",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#2b7a2b",
+  "theme_color": "#2b7a2b",
+  "icons": [
+    {
+      "src": "BatterseaBridgeicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
+

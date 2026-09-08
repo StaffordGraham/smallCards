@@ -1,19 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Small Card Demo</title>
-    <link rel="stylesheet" href="smallCards.css">
+
+
+<meta charset = "UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel = "stylesheet" href ="smallCards.css"/>
 </head>
 <body>
-
-
-<div id="table">
-    
+  <!-- <button id ="flagButon" onclick=""toggleFlag()">Flag Off</button> -->
+<div id="trickControls" class="hidden">
+    <button id="takeBackBtn" class="trickBtn">Take Back Trick</button>
+    <button id="nextTrickBtn" class="trickBtn">Next Trick</button>
 </div>
 
-<script src="Card.js"></script>
 
-<script src="smallCards.js"></script>
+
+    <div id="libraryOverlay" class="overlay hidden">
+      <div id="libraryScreen" class="library-modal modal">
+        <h2>Mendelson Winning Ways to Play Your Cards</h2>
+        <div class="library-table-container">
+        <table id="libraryTable">
+          <colgroup>
+            <col style="width: 5%;">
+            <col style="width: 25%;">
+            <col style="width: 15%;">
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Hand </th>
+              <th>Description</th>
+              <th>Page </th>
+            </tr>
+          </thead>
+          <tbody id="libraryTableBody"></tbody>
+        </table>
+        </div>
+    </div>
+    </div>
+
+  <!-- //Part II : Main Game Screen -->
+  
+
+
+
+
+
+
+<!-- //Part III : Modals contractModal -->
+ <div id="contractScreenOverlay" class="overlay hidden">
+  <div id="contractScreen" class="modal">
+   <div class="modal-content">
+   <h3 id="contractText"></h3>
+    <button id="westLeadBtn">Start Play</button>
+  </div>
+</div>
+</div>
+
+
+<!-- Part IV : Score Modal -->
+<div id="scoreOverlay" class="overlay hidden">
+  <div id="scoreScreen">
+    <p id ="scoreMessage"></p>
+    <button id="replayDealButton">Replay Deal</button>
+    <button id="nextDealButton">Next Deal</button>
+    <button id ="watchAutoPlay">Watch Automatic Play</button>
+    <button id="doubleDummy">Play Double Dummy</button>
+  </div>
+</div>
+
+<!-- Part V Score-Circles -->
+
+<!-- Part VI : Game containers -->
+<div id="imageContainer">
+  <!-- trick counters -->
+       <div id="nsTricks" class="trickCounter">N=S Tricks: 0</div>
+      <div id="ewTricks" class="trickCounter">E-WTricks:0</div>
+
+
+
+<button id="flagBtn" class="control-button">False</button>
+<button id="testBtn" class ="control-button">Test Run</button>
+<div id = "contractLabel" class ="label"></div>
+
+</div>
+<!-- <div id="winningCardContainer"> -->
+  <img id="winningCardImg" src="images/cardBack.png" alt="">
+ <!-- // <img id = "arrow" src="transparent-arrow-md.png" alt =""> -->
+<div id="score-circle" class = "score-label north-south"></div>
+<div id="score-ns" class="score-label north-south"></div>
+<div id="score-ew" class="score-label east-west"></div>
+<!-- Part VI : Scripts  -->
+<script src="Suit.js" ></script>
+<script src="Card.js"></script>
+<script src="Hand.js" ></script>
+<script src="Deck.js" ></script>
+<script src="Player.js" ></script> 
+<script src="Trick.js" ></script>
+  <script src = "Deal.js"></script>
+ <script src = "Score.js"></script>
+ <script src="clsScore.js" ></script>
+   <script src = "Defence.js"></script>
+   <script src ="dealLibrary.js"></script>
+   <script src="script.js"></script>
+   <script src="Routines.js"></script>
+
+
 </body>
+
 </html>
