@@ -71,7 +71,7 @@ function  computeLayoutMetrics() {
 	const imageContainer=document.getElementById("imageContainer")
 
 	const rect = imageContainer.getBoundingClientRect();
-	const cardWidth = Math.max(60,rect.width * .06 );
+	const cardWidth = Math.max(60,rect.width * .07 );
 	const cardHeight = cardWidth * 1.4; // preserves aspect ratio
 	const overlap = cardWidth * 0.3; // 30% overlap for fans
 	const topMargin = cardHeight * 0.1;

@@ -11,7 +11,7 @@ if (true==false){}
 
 
 class Scorer {
-  constructor(){
+  constructor(){//opening brace for constructor
     this.madeContract = true;
     this.Suit='';
     this.tricksContracted=0;
@@ -41,7 +41,7 @@ class Scorer {
     this.temp= Deals.length; 
     this.bidSuit=Deals[Deals.length-1].bidSuit
     this.perTrick =[30,30,20,20]
-    switch(this.bidSuit){
+    switch(this.bidSuit){//opening brace for switch
       case 'S':
         this.pointsPerTrick=30
         break;
@@ -57,30 +57,27 @@ class Scorer {
       case 'N':
       this.pointsPerTrick=30
           }
+          //closing brace for switch
+        }
+        //closing brace for constructor
   
 
 
 
 
-  }//end constructor
-// 
-  // showScoreMessage(scoreText) {
-//   document.getElementById('scoreContent').innerText = scoreText;
-//   document.getElementById('scoreMessage').style.display = 'flex';
-// }
-
-// To hide the score message
-hideScoreMessage() {
+ 
+hideScoreMessage() 
+{//opening brace for hideScoreMessage
   document.getElementById('scoreMessage').style.display = 'none';
-}
-  //
+}//closing brace for hideScoreMessage
+
 
      
   
 
-  // End of calculate Penalty
 
-   scoreTrick(){ 
+   scoreTrick()
+   { //opening brace for scoreTrick
   
 
     let TL = Tricks.length - 1;
@@ -89,30 +86,34 @@ hideScoreMessage() {
     let winningPlayer=thisTrick.winningPlayer
     let winningSide = winningPlayer%2
     if (thisTrick.trickScored==false){
-    if (winningPlayer %2 ==0){
+    if (winningPlayer %2 ==0)
+        {//opening brace for if statement
       this.north_southTricks+=1}
       else
       {this.east_westTricks+=1}
+    }//closing brace for if statement
      
     
 this.trickScored=true
 
-  }
-    }
+  }//closing brace for scoreTrick
+    
 
     
 
 
-  getContractfull(){
+  getContractfull()
+  {//opening brace for getContractfull
+
 
 let cont = ''
-let suitDict ={
+let suitDict ={//opening brace for suitDict
   'S':'Spade',
   "H": 'Heart',
   "D": 'Diamond',
   "C": 'Club',
   "N":'No Trump'
-}
+}//Closing brace for suitDict
 let plural =''
 let st=Deals[Deals.length-1].bidSuit
 let bidLevel = Deals[Deals.length-1].contract
@@ -126,10 +127,10 @@ if( this.contract>1){plural='s'}
 contract =bidLevel + " "+trumpSuit+plural 
 console.log(contract)
 return contract
-}
+}//closing brace for getContractfull
  
 
-  scoreTheTrickWinner(winnerNumber){
+  scoreTheTrickWinner(winnerNumber){//opening brace for scoreTheTrickWinner
   
      switch(winnerNumber){//start switch
         case 2:
@@ -152,9 +153,10 @@ return contract
      
         
 
-     };
+     }//closing brace for scoreTheTrickWinner;
 
 scoreHand(){
+  //opening brace for scoreHand
 let scoreResult = ''
 let suitDict ={
   'S':'Spade',
@@ -187,52 +189,17 @@ if (determiner ==0){scoreResult='Nailed'}
 if(determiner>0 ){scoreResult='Surpasssed'}
 
 switch (scoreResult){
-
   case 'Failed':
-    this.penalty=-50 * determiner
-    this.message1="You have failed to make your contract of "+full_contract
-    this.message1+="East-West are awarded "+this.penalty+" points."
+   this.message="Contract Failed"
     break;
-    case 'Nailed':
-      let pt = pointDict[trump]
-      let am=achievement
-      this.scoreBelow=pointDict[trump]*achievement
-      this.message1="You made your contract of "+full_contract
-      this.message2="You receive "+parseInt(achievement)+" x "+parseInt(pointDict[trump])+"points for making the contract"
-      if (trump=='N'){this.message2+="plus a no trump bonus of "+this.noTrumpBonus}
-      if (this.scoreBelow>100){this.message2+="plus a game bonus of "+this.gameBonus}
+  case 'Nailed':
+      this.message="Contract Made"
       break;
-    case 'Surpasssed':
-            this.scoreBelow=pointDict[trump]*achievement
-            this.scoreAbove=pointDict[trump]*determiner
-            this.message1="You made your contract of "+full_contract
-            this.message1+=" with "+determiner+" overtricks."
-            this.message2="You receive "+parseInt(this.bidLevel)+" x "+parseInt(pointDict[trump])+"  points for making the contract"
-            if (trump=='N'){this.message2+="  plus a no trump bonus of "+this.noTrumpBonus}
-           if (this.scoreBelow>100){this.message2+=" plus a game bonus of "+this.gameBonus}
-          this.message2 += " plus " + pointDict[trump] + " per overtrick which is " + this.scoreAbove;            break;
+  case 'Surpasssed':
+      this.message="Contract + overtricks."
 }
 
-let theMessage = this.message1+ " "+this.message2
-// //At this point lay out all the cards face up
-// clearDisplayedCards()
-//    clearPlayedCards()
-//    removePlayerCard()
-//   populateGame(currentGameData);
-//   showCards=true
-//   displayCards()
-  this.message =theMessage
+let theMessage = this.message
+
 return theMessage
 }}
-;
-
-
-
-
-
-
-
-
-
-
-  
