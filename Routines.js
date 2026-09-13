@@ -44,6 +44,16 @@ for (let i = 0; i < tempAutos.length; i++) {
 
 
 }
+function logNorthHand() {
+    const northCards = document.querySelectorAll('.playerCard[holderNumber="2"]');
+
+    const values = [];
+    northCards.forEach(div => {
+        values.push(div.getAttribute('cardNumber'));
+    });
+
+}
+	
 
 
 	function pointArrow(){
@@ -570,7 +580,6 @@ function removeCardFromHand(cardNumber,holderNumber){
 		if (noClicking==true)
 		{return}
 		zIndexCounter=0; 
-		let cardsPlaye=Tricks[Tricks.length-1].cardArray.length
 	 		
 	 if(Tricks[Tricks.length-1].cardArray.length ==0)
 	 {
@@ -610,18 +619,18 @@ if (flag){
 
 	}
 	else{
-		cardImageonTable(metrics, cardNumber, holderNumber);
+
 
 	}
-	removeCardFromHand(cardNumber,holderNumber)
 	 South.canclick = false; 
 		  North.canclick = false; 
 		  noClicking = false; 
 
 	await moveCardToCentre(pos, cardNumber,holderNumber)
 
-	
+	removeCardFromHand(cardNumber,holderNumber)
 	changeEventListeners(cardNumber,holderNumber)
+
 
 	
 		
@@ -948,17 +957,24 @@ function changeEventListeners(cardNumber, holderNumber) {
     card.addEventListener("dblclick", clearTabledCards);
     card.removeEventListener("click", Player.prototype.cardPlayEventListener);
 }
-
 function moveCardToCentre(pos, cardNumber, holderNumber) {
+	if (flag===true){
+		flag=flag
+	}
+	
+
     return new Promise(resolve => {
 
-        // Works for BOTH <img> and <div> cards
+        // Find the card by its attributes, wherever it currently is
+		
         const card = document.querySelector(
-            `.tabledCard[cardNumber="${cardNumber}"][holderNumber="${holderNumber}"]`
-        );
+    `.playerCard[cardNumber="${cardNumber}"][holderNumber="${holderNumber}"],
+     .tabledCard[cardNumber="${cardNumber}"][holderNumber="${holderNumber}"]`
+);
+
 
         if (!card) {
-            console.warn("moveCardToCentre: no tabledCard found for", cardNumber);
+            console.warn("moveCardToCentre: no card found for", cardNumber, holderNumber);
             resolve();
             return;
         }
@@ -971,19 +987,23 @@ function moveCardToCentre(pos, cardNumber, holderNumber) {
 
         card.addEventListener("transitionend", onEnd);
 
-        // Safety timeout
+        // Safety timeout in case transitionend doesn't fire
         setTimeout(() => {
             card.removeEventListener("transitionend", onEnd);
             resolve();
         }, 1000);
 
         requestAnimationFrame(() => {
+            // Optional: mark it as tabled for styling
+            card.classList.add("tabledCard");
+
             card.style.left = pos.left + "px";
             card.style.top  = pos.top  + "px";
             card.style.transform = "scale(0.75)";
         });
     });
 }
+
 
 		
 

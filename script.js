@@ -566,8 +566,7 @@ showScoreCircleGuard=false;
       theScore.scoreTrick(winningPlayer)
     }
     
-    postTrickScore() 
-    await pause (noDelay)
+   
    
 
 
@@ -577,7 +576,7 @@ showScoreCircleGuard=false;
   }
 
 function postTrickScore(){
-  return;
+  
 
 
 
@@ -720,10 +719,10 @@ function load_DealFromLibrary(dealIndex){
 
        
 function scoopTrick(){
-  const cards = document.querySelectorAll(".tabledCards");
+  const cards = document.querySelectorAll(".tabledCard");
 
     // Determine winner partnership: 0 = NS, 1 = EW
-    let winner = Tricks[Tricks.length - 1].winner
+    let winner = Tricks[Tricks.length - 1].winningPlayer
 
     // Target positions for the trick
     const trickTargets = {
@@ -738,7 +737,7 @@ function scoopTrick(){
         card.style.left = left;
         card.style.top = top;
         card.style.transform = "scale(0.5)";
-        card.classList.remove("tabledCards"); // optional: prevent re-clearing
+        card.classList.remove("tabledCard"); // optional: prevent re-clearing
     });
     hideTrickControls()
 }

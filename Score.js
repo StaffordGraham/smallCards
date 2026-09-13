@@ -202,4 +202,5 @@ switch (scoreResult){
 let theMessage = this.message
 
 return theMessage
-}}
+}
+}

@@ -1,17 +1,5 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #2b7a2b;
-    margin: 0;
-    padding:0;
-}
 
-#table {
-    position: relative;
-    width: 100vw;
-    height: 100vh;   /* or whatever height you want */
-    margin: 0;
-    padding: 0;
-}
+
 
 
 .card {
@@ -124,7 +112,7 @@ body{
 
 
 .trickBtn{
-padding: 12px 24px;
+padding: 2px 4px;
     font-size: 1rem;
     border-radius: 6px;
     border: 1px solid #ccc;
@@ -184,15 +172,7 @@ right: 20px;
 
 
 }
-#nsTricks {
-    top: 20px;
-    right: 20px;
-}
 
-#ewTricks {
-    top: 60px;
-    right: 20px;
-}
 
 
 

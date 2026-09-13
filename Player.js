@@ -298,7 +298,7 @@ if (backImages.length > 0) {
         const leftPos=startX+(index*overlap)
         div.style.position="absolute";
         div.style.left=leftPos+"px"
-        div.style.bottom = rect.height * 0.05 + "px";
+        div.style.top = rect.height * 0.75 + "px";
 		div.addEventListener("click", this.cardPlayEventListener);
         imageContainer.appendChild(div)
         index++
@@ -828,7 +828,7 @@ renderSuit(cards, metrics, topPosition, holderNumber) {
         div.style.position="absolute";
         div.style.left=leftPos+"px"
         div.style.top=northOffset+"px";
-		div.addEventListener("click", this.cardPlayEventListener);
+		div.addEventListener("click", this.cardPlayEventListener,{once:true});
         imageContainer.appendChild(div)
         index++
         }
