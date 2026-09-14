@@ -3,10 +3,8 @@
 
 
 .card {
-    width: 12vw;
-    height: 18vw;
-    max-width: 120px;
-    max-height: 180px;
+    width: 16vw;
+    height: 24vw;
     background: white;
     border-radius: 8px;
     border: 1px solid #ccc;
@@ -18,7 +16,7 @@
 
 
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    font-size: 2.2vw;
+    font-size: 3vw;
 }
 
 .cardBack {
@@ -48,10 +46,12 @@
     content: attr(data-rank) "\A" attr(data-suit);
     white-space: pre;
     position: absolute;
-  top: 0.15em;
-    left: 0.15em;
+  top: 0;
+    left: 0;
     font-size: 2em;
     font-weight: bold;
+    line-height: 0.7;
+    padding: 0.1em;
 }
 
 /* Bottom-right corner */
@@ -59,11 +59,13 @@
     content: attr(data-rank) "\A " attr(data-suit);
     white-space: pre;
     position: absolute;
-    bottom: 0.15em;
-    right: 0.15em;
+    bottom: 0;
+    right: 0;
     font-size: 2em;
     font-weight: bold;
+    line-height: 0.7;
     transform: rotate(180deg);
+    padding: 0.1em;
 }
 
 /* Suit colours */
