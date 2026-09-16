@@ -12,11 +12,10 @@
    position: absolute;   /* required */
     margin: 0;   
     transform: none;
-
-
-
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
     font-size: 3vw;
+  font-family: "Apple Symbols", "Segoe UI Symbol", "Arial Unicode MS", sans-serif;    font-weight: 700;
+
 }
 
 .cardBack {
@@ -68,16 +67,12 @@
     padding: 0.1em;
 }
 
-/* Suit colours */
-.card[data-suit="♥"],
-.card[data-suit="♦"] {
-    color: red;
-}
+/* /* New suit colours */
+.card[data-suit="♠"] { color: #274C77; }   /* Spades = blue */
+.card[data-suit="♥"] { color: red; }    /* Hearts = red */
+.card[data-suit="♦"] { color: green; }  /* Diamonds = green */
+.card[data-suit="♣"] { color: black; }  /* Clubs = black */
 
-.card[data-suit="♠"],
-.card[data-suit="♣"] {
-    color: black;
-}
 
 body{
 	margin: 0;
