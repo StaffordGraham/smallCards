@@ -20,6 +20,7 @@ class Trick{///start Trick class
 		this.dl=Deals.length
 		this.trumpSuit=Deals[Deals.length-1].bidSuit
 		this.leadSuit =" ";
+		this.leadSuitNumber = null
 		this.theHighCard=0;
 		this.highestRankingPlayer =0;
 		this.winningCardNumber=0
@@ -28,9 +29,10 @@ class Trick{///start Trick class
 		this.scardsScooped = false
 		this.beenHere=false
 		this.noTrump = false
-		this.leadSuitNumber= -1
+		this.leadSuitNumber= 0
 		if (Deals[Deals.length-1].bidSuit=='N'){
 			this.noTrump=true
+		zIndexCounter =0
 
 		}
 		trickCollected=false
@@ -68,23 +70,27 @@ addCard(crd){//start addCard
 	if (flag==true){
 		flag=flag
 	}
-	let suitNum =suitNumberFromCardNumber(crd)
-	var cn = crd;
+	let suitList = ['S','H','D','C']
+	let suitNum = crd.suitNum
+		var cn = crd;
 	var hn = this.toPlay;
-	let trumpSuit=Deals[Deals.length-1].bidSuit
+	let trumpSuit=Deals[Deals.length-1].bidSuitNumber
+
 
 	let followSuit=true
 	let cardIsTrump=false
-	if (crd.suit!=this.leadSuit)
+	if (crd.suitNum!=this.leadSuitNumber)
 	{followSuit=false}
 	if(this.noTrump==false){
-	if (crd.suit==trumpSuit)
+	if (crd.suitNumber==trumpSuit)
 	{this.trumpPlayed=true}
 	}
 			if (this.cardArray.length==0)
 					{//start if 
 					this.toPlay=crd.holderNumber;
 					this.leadSuit=crd.suit;
+					this.leadSuitNumber=crd.suitNumber
+
 						//end if
 				}
 				

@@ -272,6 +272,8 @@ if (backImages.length > 0) {
 ///****SOUTH DISPLAY***
 	southDisplay(metrics,cardNumbers){
 
+		flag=flag
+
 
     const { rect, cardWidth, cardHeight ,northOffset,southOffset} = metrics;
     const containerRect=imageContainer.getBoundingClientRect();
@@ -719,6 +721,7 @@ renderSuit(cards, metrics, topPosition, holderNumber) {
 //render Eastsuit
 
 	 computeLayoutMetrics(imageContainer) {
+	
 
 	let cardWidth;
 	
@@ -738,6 +741,7 @@ renderSuit(cards, metrics, topPosition, holderNumber) {
     }
     else {
         cardWidth = vw * 0.14;  
+	}
 
     // Card size based on screen width
     const cardHeight = cardWidth * 1.4;
@@ -753,7 +757,7 @@ renderSuit(cards, metrics, topPosition, holderNumber) {
 
     return { rect, cardWidth, cardHeight, overlap, topMargin, bottomMargin, northOffset, southOffset };
 }
-	 }
+	 
 
 	
 	

@@ -159,7 +159,7 @@ function dfplay(){//start dfplay
 			cn=playTrump()
 		}
 		else
-		{cn=discard()}
+		{cn=discard(PN)}
 }
 return cn
 
@@ -237,6 +237,7 @@ hn=nowTp
 
 				case 1:
 					if (!autoPlay){
+						flag=flag
 					cn=dfplay()
 					}
 					else {
@@ -562,6 +563,19 @@ function removeCardFromHand(cardNumber,holderNumber){
 	return { rect, cardWidth, cardHeight, overlap, topMargin, bottomMargin, northOffset, southOffset };
 
 	 }
+
+	 function voidInSuit(suit,holderNumber){
+	
+		if (flag){
+			flag=flag
+		}
+		let answer = false
+	
+		if (Players[holderNumber].Suits[suit].length==0)
+		{answer=true}
+		return answer
+
+	 }
 	
 
 		
@@ -570,7 +584,7 @@ function removeCardFromHand(cardNumber,holderNumber){
 	async  function  playCard(cardNumber, holderNumber) {//start playCard
 
 		
-		if(flag){
+		if (flag==true){
 			flag=flag
 		}
 		
@@ -579,11 +593,12 @@ function removeCardFromHand(cardNumber,holderNumber){
 		
 		if (noClicking==true)
 		{return}
-		zIndexCounter=0; 
 	 		
 	 if(Tricks[Tricks.length-1].cardArray.length ==0)
 	 {
-	Tricks[Tricks.length-1].leadSuit = cd.suit;
+		trk=Tricks[Tricks.length-1]
+		Tricks[Tricks.length-1].leadSuit = cd.suit;
+		Tricks[Tricks.length-1].leadSuitNumber = cd.suitNumber;
 	 }
 		
 		holderNumber = +holderNumber;
@@ -596,12 +611,16 @@ function removeCardFromHand(cardNumber,holderNumber){
 			return;
 
 	 }
-	 var theLeadSuit = Tricks[Tricks.length-1].leadSuit;
-	 var vIS=voidInSuit(cardNumber,holderNumber)
-	 var theSuit = cd.suit;
+	 if (Tricks[Tricks.length-1].cardArray.length !=0){
+	var a = Tricks.length
+	var trk =Tricks[Tricks.length-1]
+	 var theLeadSuitNumber = Tricks[Tricks.length-1].leadSuitNumber;
+	 var vIS=voidInSuit(theLeadSuitNumber,holderNumber)
+	 var theSuit = cd.suitNumber;
 	// if Player is not following suit
-	 if (theSuit !=theLeadSuit && vIS){
+	 if (theSuit !=theLeadSuitNumber && !vIS){
 		return
+	 }
 	 }
 	 let crd=new Card(cardNumber,holderNumber)
 	 Tricks[Tricks.length-1].addCard(crd);
@@ -684,9 +703,56 @@ if (flag){
 			}
 			
 		
-function voidInSuit(cardNumber, holderNumber) {
+function voidInLeadSuit(cardNumber, holderNumber) {
+	if (flag==true){
+		flag=flag
+	}
+	let leadSuit = Tricks[Tricks.length-1].leadSuit
+
+ let suitInitials=["S","H","D","C"]
+  const playerSuits={
+
+    0: Players[PN].Suits.Spades,
+    1: Players[PN].Suits.Hearts, 
+    2: Players[PN].Suits.Diamonds,
+    3: Players[PN].Suits.Clubs
+
+ }
+ let testSuit = 0;
+let testSuitName = '';
+let p =0
+
+
+for (const suit in Players[PN].Suits) {
+    const p = Players[PN].Suits[suit].length;
+   
+    if (p > testSuit)
+        {
+        testSuit = p;
+        testSuitName = suit;
+    }
+  }
+  
+ SN=parseInt(testSuitName)
+
+    let cardNumbers =Players[PN].Suits[SN]
+    answer =Math.min(...cardNumbers)
+    if (answer==0){
+      answer =answer
+    }
+    return answer
+
+
+
+
+
+
+
+
     let theSuit = suitNumberFromCardNumber(cardNumber);
-    let lengo = theSuit.length;
+
+
+    let lengo = Players[holderNumber].Suits[theSuit].length
 
     if (lengo === 0) {
         return true;
@@ -978,6 +1044,8 @@ function moveCardToCentre(pos, cardNumber, holderNumber) {
             resolve();
             return;
         }
+		card.style.zIndex=zIndexCounter
+		zIndexCounter ++
 
         function onEnd(e) {
             if (e.target !== card) return;

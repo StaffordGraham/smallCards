@@ -7,6 +7,7 @@ if (true==false){shouldITrump}
 if (true==false){canIfollow}
 if (true==false){canIFollowAndWin}
 if (true==false){selectOpeningLead}
+if (true==false){discard}
 if (true==false){selectLead}
 if (true==false){doIHaveCardsInThisSuit}
 if (true==false){lowestWinner}
@@ -934,56 +935,70 @@ function areWeWinning(Player, Suit) {
   const winningHolder = Tricks[TL].cardArray[0].holderNumber;
   return Player % 2 === winningHolder % 2;
 }
-function discard() {
-  if (flag == true) {
-   flag=flag
+
+function calcSuitValue(holderNumber,suitNumber){
+  if (flag)
+  {flag=flag}
+
+  let suitValue=0;
+  const trump =Deals[Deals.length-1].trumpSuit
+  const trialSuit =Players[holderNumber].Suits[suitNumber]
+  if (Players[holderNumber].Suits[suitNumber].length==0)
+    {suitValue=Infinity}
+  if (testSuit=trump){suitValue=Infinity}
+  trialSuit.sort((a, b) => b - a);
+  if ((trialSuit[0]%testSuit==11) && (trialSuit.length<3)){
+    suitValue=3
   }
-  let answer =0
-
-  let PN=Tricks[Tricks.length-1].toPlay
-  if (Players[PN].discards.length>0){
-    answer=Players[PN].discards.shift()
-    return
-
+  else if ((trialSuit[0]%testSuit==10)&&(trialSuit.length<4)){
+    suitValue=2
   }
-
- 
-  let suitInitials=["S","H","D","C"]
-  const playerSuits={
-
-    0: Players[PN].Suits.Spades,
-    1: Players[PN].Suits.Hearts, 
-    2: Players[PN].Suits.Diamonds,
-    3: Players[PN].Suits.Clubs
-
- }
- let testSuit = 0;
-let testSuitName = '';
-let p =0
-
-
-for (const suit in Players[PN].Suits) {
-    const p = Players[PN].Suits[suit].length;
-   
-    if (p > testSuit)
-        {
-        testSuit = p;
-        testSuitName = suit;
-    }
+  else if ((trialSuit[0]%testSuit==12)&&(trialSuit.length<2)){
+    suitValue=4
   }
-  
- SN=parseInt(testSuitName)
+  return suitValue
 
-    let cardNumbers =Players[PN].Suits[SN]
-    answer =Math.min(...cardNumbers)
-    if (answer==0){
-      answer =answer
-    }
-    return answer
-  
 
 
 }
+
+function discard(holderNumber){
+  if (flag)
+  {flag=flag}
+  let answer = null
+  if (Players[holderNumber].discards.length>0){
+    return Players[holderNumber].discards.shift()
+
+  }
+  let lowestValue = Infinity
+  let bestDiscardSuit=null
+
+   for (let i = 0; i<Players[holderNumber].Suits.length; i++){
+    let testSuit = Players[holderNumber].Suits[i]
+    let testValue =calcSuitValue(holderNumber,i)
+    if (testValue<lowestValue){
+      lowestValue=testValue
+      bestDiscardSuit=i
+    }
+  }
+    let result= Math.min(...Players[holderNumber].Suits[bestDiscardSuit])
+    return result
+
+
+   }
+    
+  
+ 
+
+
+
+
+
+
+
+
+
+
    
 
 

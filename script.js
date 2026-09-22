@@ -128,6 +128,7 @@ var scoopTrickCounter=0
 var showBackCardCounter=0
 var sweepCardCounter=0
 var nextTrickCounter = 0
+var zIndexCounter=0
 var devCounter=0
 var noClicking=false
 var timeToLead = false;
@@ -139,6 +140,7 @@ const settings = {
     animationSpeed: 1000,
     cardScale: 1.0,
     tableTheme: "green"
+
 };
 let rafIDs =[];
 let timeoutIDs = [];
@@ -177,7 +179,7 @@ suitDict["C"]="Club"
 document.getElementById('nextTrickBtn').addEventListener('click', () => {
     clearTabledCards();
 });
-
+console.log ("computeLayoutMetrics")
 function testFunction(){
 }
  

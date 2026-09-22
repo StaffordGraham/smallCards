@@ -1,7 +1,8 @@
 class Deal{
   constructor(data){
     
-      this.name=data?.name;
+      this.Suits=['S','H','D','C','N']
+        this.name=data?.name;
       this.bidLevel=0
       this.south_cards=data?.south_cards;
       this.north_cards=data?.north_cards;
@@ -31,6 +32,8 @@ class Deal{
         const parts=st.split(" ");
         this.bidLevel=parseInt(parts[0],10);
         this.bidSuit=parts[1][0];
+        this.bidSuitNumber = this.Suits.indexOf(this.bidSuit)
+
         this.contractMessage=this.getContract()
   }
 
