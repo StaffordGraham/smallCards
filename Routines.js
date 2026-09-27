@@ -1027,7 +1027,6 @@ function moveCardToCentre(pos, cardNumber, holderNumber) {
 	if (flag===true){
 		flag=flag
 	}
-	
 
     return new Promise(resolve => {
 
@@ -1067,9 +1066,15 @@ function moveCardToCentre(pos, cardNumber, holderNumber) {
 
             card.style.left = pos.left + "px";
             card.style.top  = pos.top  + "px";
+			console.log("before",holderNumber,card.offsetWidth,card.offsetHeight
+);
             card.style.transform = "scale(0.75)";
+			console.log("after",holderNumber,card.offsetWidth,card.offsetHeight)
+
+
         });
     });
+
 }
 
 

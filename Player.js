@@ -299,6 +299,8 @@ if (backImages.length > 0) {
 
         const leftPos=startX+(index*overlap)
         div.style.position="absolute";
+		div.style.width = cardWidth + "px"; 
+		div.style.height = cardHeight + "px";
         div.style.left=leftPos+"px"
         div.style.top = rect.height * 0.75 + "px";
 		div.addEventListener("click", this.cardPlayEventListener);
@@ -829,6 +831,8 @@ renderSuit(cards, metrics, topPosition, holderNumber) {
 		div.setAttribute("holderNumber", this.holderNumber);
 
         const leftPos=startX+(index*overlap)
+		div.style.width = cardWidth + "px"; 
+		div.style.height = cardHeight + "px";
         div.style.position="absolute";
         div.style.left=leftPos+"px"
         div.style.top=northOffset+"px";

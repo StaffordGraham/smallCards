@@ -179,7 +179,6 @@ suitDict["C"]="Club"
 document.getElementById('nextTrickBtn').addEventListener('click', () => {
     clearTabledCards();
 });
-console.log ("computeLayoutMetrics")
 function testFunction(){
 }
  
