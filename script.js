@@ -249,11 +249,7 @@ newContinuePlay()
 
 
 
-document.getElementById('doubleDummy').addEventListener('click',function(){
-  showCards=true;
-  enterTeachingMode()
-  reLoadLastDeal()
-})
+
 
 document.getElementById('takeBackBtn').addEventListener('click',function(){
   takeBackTrick()
@@ -277,14 +273,12 @@ document.addEventListener("DOMContentLoaded", function() {
   showLibraryScreen()
  
 });
-let autoPlayButton =document.getElementById("watchAutoPlay")
-autoPlayButton.addEventListener("click",function(){
-  autoPlay=true
-  showCards=true
-  enterTeachingMode()
-  reLoadLastDeal()
-
+let homeButton = document.getElementById("homeButton")
+homeButton.addEventListener("click",function(){
+  showPage("homeScreen")
 })
+let autoPlayButton =document.getElementById("watchAutoPlay")
+
 
 let replayDealButton=document.getElementById("replayDealButton")
 replayDealButton.addEventListener("click",function(){

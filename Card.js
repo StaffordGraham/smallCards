@@ -12,7 +12,7 @@ class Card
 		this.suit=this.calculateSuitName(cardNumber);
 		this.face= this.calculateFace(cardNumber)
 		this.faceValue=cardNumber%13
-		this.rankValue=cardNumber%13
+		this.rankValue=this.faceValue+1
 		this.src=this.name +".jpg"
 		this.holderNumber=holderNumber;
 		this.suitNumber=Math.floor(cardNumber/13)

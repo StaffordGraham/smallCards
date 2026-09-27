@@ -18,7 +18,7 @@ class Trick{///start Trick class
 		this.trumpPlayed =false;
 		this.toPlay=Leader;
 		this.dl=Deals.length
-		this.trumpSuit=Deals[Deals.length-1].bidSuit
+		this.trumpSuitNumber=Deals[Deals.length-1].bidSuitNumber
 		this.leadSuit =" ";
 		this.leadSuitNumber = null
 		this.theHighCard=0;
@@ -70,19 +70,20 @@ addCard(crd){//start addCard
 	if (flag==true){
 		flag=flag
 	}
+	let trumpSuitNumber = this.trumpSuit
 	let suitList = ['S','H','D','C']
-	let suitNum = crd.suitNum
-		var cn = crd;
+	let suitNumber = crd.suitNumber
+		var cn = crd.cardNumber;
 	var hn = this.toPlay;
-	let trumpSuit=Deals[Deals.length-1].bidSuitNumber
 
 
 	let followSuit=true
 	let cardIsTrump=false
-	if (crd.suitNum!=this.leadSuitNumber)
+	let trumpPlayed = false
+	if (crd.suitNumber!=this.leadSuitNumber)
 	{followSuit=false}
 	if(this.noTrump==false){
-	if (crd.suitNumber==trumpSuit)
+	if (crd.suitNumber==this.trumpSuitNumber)
 	{this.trumpPlayed=true}
 	}
 			if (this.cardArray.length==0)
@@ -115,31 +116,33 @@ addCard(crd){//start addCard
 	
 	tempArray = [...this.cardArray];
 	
-	tempArray.forEach(card=>{
+	this.cardArray.forEach(card=>{
 		let rv = card.rankValue
-		if (card.suit!=this.leadSuit && card.suit!=this.trumpSuit)
+		if (card.suitNumber!=this.leadSuitNumber && card.suitNumber!=this.trumpSuitNumber)
 			{card.rankValue=0
 				return
 			}
-			if (this.trumpPlayed==true&& card.suit!=this.trumpSuit){
+			if (this.trumpPlayed==true&& card.suitNumber!=this.trumpSuitNumber){
 				card.rankValue=0
 				return
 			}
-	})
-tempArray.sort((a,b)=>b.rankValue - a.rankValue);
-let last = tempArray.length -1;
+			
+			}
+	)
+	this.cardArray.sort((a,b)=>b.rankValue - a.rankValue);
+let last = this.cardArray.length -1;
 
-if(tempArray[0].rankValue<tempArray[last].rankValue){
+if(this.cardArray[0].rankValue<this.cardArray[last].rankValue){
 	tempArray.reverse()
 }
 
 if (flag==true){
 	flag=flag		
 }
-this.winningCardRank=tempArray[0].rankValue
-this.winningPlayer= tempArray[0].holderNumber
-this.winningCardNumber = tempArray[0].cardNumber
-let name = tempArray[0].name
+this.winningCardRank=this.cardArray[0].rankValue
+this.winningPlayer= this.cardArray[0].holderNumber
+this.winningCardNumber = this.cardArray[0].cardNumber
+let name = this.cardArray[0].name
 
 this.toPlay +=1;
 this.toPlay = this.toPlay%4;	
