@@ -18,6 +18,8 @@
 
 }
 
+
+
 .cardBack {
     width: 12vw;
     height: 18vw;
@@ -143,8 +145,15 @@ padding: 2px 4px;
 }
 
 #nsTricks{
- top: 20px;
-right: 20px;
+ top: 50px;
+right: 50px;
+z-index: 9999;
+position:absolute;
+  font-size: medium;
+  font-weight: bold;
+  color: #eee;
+  background-color: #02652A;
+  width: 10px;
 
 }
 #ewTricks{
@@ -152,23 +161,7 @@ right: 20px;
     right: 20px;
 }
 
-.trickCounter{
- position: absolute;
-    min-width: 140px;
-    height: 30px;
-    background-color: #0D5F37;
-    color: white;;
-    font-weight: normal;
-    font-size: 18px;
-    padding:6px 12px;
-        display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;   /* stays above cards */
 
-
-
-}
 
 
 

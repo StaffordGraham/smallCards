@@ -31,7 +31,7 @@ class Scorer {
     this.scoreBelow=0;
     this.scoreInWords="";
     this.gameBonus=300;
-    this.north_southTricks=0;
+    this.northSouthTricks=0;
     this.east_westTricks=0;
     this.slamScore=0;
     this.noTrumpBonus=10
@@ -88,7 +88,7 @@ hideScoreMessage()
     if (thisTrick.trickScored==false){
     if (winningPlayer %2 ==0)
         {//opening brace for if statement
-      this.north_southTricks+=1}
+      this.northSouthTricks+=1}
       else
       {this.east_westTricks+=1}
     }//closing brace for if statement
@@ -134,10 +134,10 @@ return contract
   
      switch(winnerNumber){//start switch
         case 2:
-          this.north_southTricks+=1;
+          this.northSouthTricks+=1;
           break;
           case 0:
-            this.north_southTricks +=1;
+            this.northSouthTricks +=1;
             break;
           case 3:
             this.east_westTricks+=1;
@@ -147,7 +147,7 @@ return contract
             break;
      }//end switch
      var leftLab = document.getElementById('top-left-label');
-     leftLab.textContent = "N-S " + this.north_southTricks;
+     leftLab.textContent = "N-S " + this.northSouthTricks;
      var rightLab = document.getElementById('top-right-label');
      rightLab.textContent="E-W "+ this.east_westTricks;
      
@@ -176,7 +176,7 @@ let pointDict={
  let trump =this.bidSuit
   let plural =''
   if (trump !='N'){this.noTrumpBonus=0}
-let achievement = this.north_southTricks-6
+let achievement = this.northSouthTricks-6
 let aim =this.aim
 //let aim = Deals[Deals.length-1].contract
 

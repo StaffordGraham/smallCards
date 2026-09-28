@@ -1065,11 +1065,8 @@ function moveCardToCentre(pos, cardNumber, holderNumber) {
             card.classList.add("tabledCard");
 
             card.style.left = pos.left + "px";
-            card.style.top  = pos.top  + "px";
-			console.log("before",holderNumber,card.offsetWidth,card.offsetHeight
-);
+            card.style.top  = pos.top  + "px";	
             card.style.transform = "scale(0.75)";
-			console.log("after",holderNumber,card.offsetWidth,card.offsetHeight)
 
 
         });

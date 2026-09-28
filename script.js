@@ -505,9 +505,9 @@ function playAgain(){
       flag=flag
     }
           const scoreCircle=document.getElementById("score-circle")
-          let NST =Scores[Scores.length-1].north_southTricks
+          let NST =Scores[Scores.length-1].northSouthTricks
 
-    if (Scores[Scores.length-1].north_southTricks >0){
+    if (Scores[Scores.length-1].northSouthTricks >0){
       const scoreNS=document.getElementById("score-ns")
       scoreNS.style.display="block"
     }
@@ -554,12 +554,17 @@ showScoreCircleGuard=false;
      var TL = Tricks.length - 1;
     let winningCard = thisTrick.winningCardNumber
     let winningPlayer=thisTrick.winningPlayer
-	  const theScore=Scores[Scores.length-1]
+	  let  theScore=Scores[Scores.length-1]
+    document.getElementById("nsTricks").classList.remove("hidden")
 
     if (typeof theScore.scoreTrick==="function"){
 
       theScore.scoreTrick(winningPlayer)
     }
+    let test = Scores[Scores.length-1].northSouthTricks
+    document.getElementById('nsTricks').innerText="Tricks: " + test;
+    console.log(document.getElementById('nsTricks'));
+    console.log(document.getElementById('nsTricks').innerText);
     
    
    
@@ -578,7 +583,7 @@ function postTrickScore(){
   let nsTricks=0
   let ewTricks=0
   let scr =Scores[Scores.length-1]
-  nsTricks=scr.north_southTricks
+  nsTricks=scr.northSouthTricks
   ewTricks=scr.east_westTricks
   let nposter =document.getElementById("nsTricks")
   nposter.classList.remove("hidden")
@@ -1155,6 +1160,11 @@ overlay.classList.remove('hidden')
 overlay.style.display='flex'
 const starter =document.getElementById('westLeadBtn')
 starter.addEventListener('click',westLeadBtnFunc)
+}
+
+function showTricks(){
+   trickCount=Tricks[Tricks.length-1].northSouthTricks
+  document.getElementById('trickCounter').innerText=trickCount
 }
 
 
