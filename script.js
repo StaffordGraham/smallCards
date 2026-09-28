@@ -563,8 +563,7 @@ showScoreCircleGuard=false;
     }
     let test = Scores[Scores.length-1].northSouthTricks
     document.getElementById('nsTricks').innerText="Tricks: " + test;
-    console.log(document.getElementById('nsTricks'));
-    console.log(document.getElementById('nsTricks').innerText);
+    
     
    
    

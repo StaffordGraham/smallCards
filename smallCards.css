@@ -145,15 +145,15 @@ padding: 2px 4px;
 }
 
 #nsTricks{
- top: 50px;
-right: 50px;
+ top: 10px;
+right: 10px;
 z-index: 9999;
 position:absolute;
   font-size: medium;
   font-weight: bold;
   color: #eee;
   background-color: #02652A;
-  width: 10px;
+  width: 50px;
 
 }
 #ewTricks{
