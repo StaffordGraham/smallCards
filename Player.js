@@ -122,11 +122,11 @@ DisplayBack(){
 }
 }
 
-removeCardBack(){
+removeCardBack(holderNumber){
 
 	let nowTp = Tricks[Tricks.length-1].toPlay;
 	let backImages=[]
-	switch(nowTp){
+	switch(holderNumber){
 		case 1:
 			backImages = document.querySelectorAll('img[data-side="West"]');
 			break

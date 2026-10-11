@@ -51,12 +51,14 @@ case 0:
 	break;
 	case 1:
 		this.toPlay =1;
+		removeCardBack()
 		break;
 	case 2:
 		this.toPlay=2;
 		break;
 	case 3:
 		this.toPlay=3;
+		removeCardBack()
 		break;
 	}//end switch
 	
@@ -70,6 +72,7 @@ addCard(crd){//start addCard
 	if (flag==true){
 		flag=flag
 	}
+	
 	let trumpSuitNumber = this.trumpSuit
 	let suitList = ['S','H','D','C']
 	let suitNumber = crd.suitNumber

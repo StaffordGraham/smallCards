@@ -11,9 +11,7 @@
 //A
 //B
 //C
-if (true==false){clearHand}
 if (true==false){clearPlayedCards}
-if (true==false){clearDisplayedCardBack}
 
 
 if  (true==false){closeAllModals}
@@ -333,6 +331,8 @@ function hideWelcomeScreen() {
 
 
 function clearPlayedCards() {
+  console.log('in clearPlayedCards')
+  console.log('')
       const cardsToRemove = document.querySelectorAll(".tabledCard");
       cardsToRemove.forEach(card => {
       card.remove();
@@ -371,6 +371,8 @@ overlay.style.display='flex'
 };
 
 function disableTrickButtons(){
+    console.log('disableTrickButtons')
+
    const controls = document.getElementById("trickControls");
     controls.style.pointerEvents = "none";
     controls.style.opacity = "0.5";
@@ -813,6 +815,7 @@ scoopTrickGuard=false;
 
 // 
 async function showBackCard(){
+  console.log('Im using the function showBackCard')
 
   
   if (showBackCardGuard) return;
@@ -899,6 +902,8 @@ else{
 
 }
 function convertCard(value){
+    console.log('convertCard')
+
   cd = new Card(value,0)
   return cd.face
 }
@@ -909,6 +914,8 @@ function safeRAF(fn) {
 }
 
  function closeAllModals(){
+    console.log('closeAllModals')
+
   // document.getElementById('welcomeScreen').style.display = 'none';
   document.getElementById('contractScreenOverlay').style.display = 'none';
 
@@ -964,7 +971,8 @@ function domLoadfunc(){
 
 function resetDeal() {
   handOverGuard=false
-	let temp = Deals.length
+  //Remove Score for hand
+  Scores.pop()
 	document.getElementById("scoreOverlay").classList.add("hidden");
     // 1. Cancel ALL async callbacks (removes closure references)
     timeoutIDs.forEach(id => clearTimeout(id));
@@ -1178,6 +1186,7 @@ let c = Deals[Deals.length-1].contract
 let theContract=Deals[Deals.length-1].getContract()
 contractLabel.innerText =c
 startPlayGuard=false
+document.getElementById('')
 startPlay()
 }
 

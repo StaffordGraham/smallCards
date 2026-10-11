@@ -1163,7 +1163,7 @@ function removeCardFromHand(cardNumber,holderNumber){
 			flag=flag
 		}
 Players[holderNumber].removeCard(cardNumber,holderNumber);
-Players[holderNumber].removeCardBack()
+Players[holderNumber].removeCardBack(holderNumber)
 	}
 
 
