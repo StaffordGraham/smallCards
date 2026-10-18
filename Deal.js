@@ -34,6 +34,13 @@ class Deal{
         this.bidLevel=parseInt(parts[0],10);
         this.bidSuit=parts[1][0];
         this.bidSuitNumber = this.Suits.indexOf(this.bidSuit)
+        this.defensiveOverrides = data?.defensiveOverrides || [];
+        this.suitLeadCounts = {
+    S: 0,
+    H: 0,
+    D: 0,
+    C: 0
+}
 
         this.contractMessage=this.getContract()
   }

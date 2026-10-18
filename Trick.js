@@ -30,6 +30,7 @@ class Trick{///start Trick class
 		this.beenHere=false
 		this.noTrump = false
 		this.leadSuitNumber= 0
+		this.suitOccurrence = 0 // 1 = first lead of this suit in the hand, 2 = second, ... (0 = no card led yet)
 		if (Deals[Deals.length-1].bidSuit=='N'){
 			this.noTrump=true
 		zIndexCounter =0
@@ -94,6 +95,16 @@ addCard(crd){//start addCard
 					this.toPlay=crd.holderNumber;
 					this.leadSuit=crd.suit;
 					this.leadSuitNumber=crd.suitNumber
+
+					// Count earlier tricks led in the same suit. Only tricks before this one
+					// in Tricks are examined; if this trick isn't in Tricks yet, all are earlier.
+					let myIndex = Tricks.indexOf(this)
+					let previousTricks = (myIndex === -1) ? Tricks : Tricks.slice(0, myIndex)
+					let previousOccurrences = previousTricks.filter(t => t !== this && t.leadSuit === this.leadSuit).length
+					this.suitOccurrence = previousOccurrences + 1
+					console.log('[suitOccurrence] Lead suit:', this.leadSuit)
+					console.log('[suitOccurrence] Previous occurrences:', previousOccurrences)
+					console.log('[suitOccurrence] suitOccurrence:', this.suitOccurrence)
 
 						//end if
 				}
