@@ -525,9 +525,16 @@ function removeCardFromHand(cardNumber,holderNumber){
 	}
 			Players[holderNumber].removeCard(cardNumber,holderNumber);
 			Players[holderNumber].removeCardBack()
+
+let arr = Players[holderNumber].leads
+let x = cardNumber
+const index = arr.indexOf(x)
+if (index !==-1){
+	arr.splice(index,1)
+	console.log(arr)
 }
 
-
+}
 
 		
 		//end switch
@@ -581,7 +588,7 @@ function removeCardFromHand(cardNumber,holderNumber){
 		
 		
 
-	async  function  playCard(cardNumber, holderNumber) {//start playCard
+	async  function  playCard(cardNumber, holderNumber, forced = false) {//start playCard
 
 		
 		if (flag==true){
@@ -622,6 +629,12 @@ function removeCardFromHand(cardNumber,holderNumber){
 		return
 	 }
 	 }
+	 // Key decision points: a wrong card stays in the hand (see Coach.js)
+	 if (!forced && !autoPlay && holderNumber%2==0){
+		if (!checkKeyPlay(cardNumber,holderNumber)){
+			return
+		}
+	 }
 	 let crd=new Card(cardNumber,holderNumber)
 	 Tricks[Tricks.length-1].addCard(crd);
 	
@@ -635,6 +648,8 @@ if (flag){
 
 	if (holderNumber%2==1){
 		defenderCardonTable(metrics,cardNumber,holderNumber)
+		// remove the card back as the face appears, before the move to the centre
+		Players[holderNumber].removeCardBack(holderNumber)
 
 	}
 	else{
@@ -646,8 +661,15 @@ if (flag){
 		  noClicking = false; 
 
 	await moveCardToCentre(pos, cardNumber,holderNumber)
+	if (holderNumber==3){
 
+	}
+	
 	removeCardFromHand(cardNumber,holderNumber)
+	if (holderNumber==3){
+
+	}
+
 	changeEventListeners(cardNumber,holderNumber)
 
 
@@ -665,8 +687,8 @@ if (flag){
 	
 	 
 		 
-	 //End playCard function
-	}
+	}//End playCard function
+	
 
 
 
@@ -857,7 +879,8 @@ async function  handOver(){
 	}
 	let winningPlayer=Tricks[Tricks.length-1].winningPlayer
       Scores[Scores.length-1].scoreTrick(winningPlayer)
-    
+      document.getElementById('nsTricks').innerText="Tricks: " + Scores[Scores.length-1].northSouthTricks;
+
 	const theScore=Scores[Scores.length-1]
 	const nstrics=Scores[Scores.length-1].north_southTricks
 	const ewtrics=Scores[Scores.length-1].east_westTricks
@@ -1163,7 +1186,15 @@ function removeCardFromHand(cardNumber,holderNumber){
 			flag=flag
 		}
 Players[holderNumber].removeCard(cardNumber,holderNumber);
-Players[holderNumber].removeCardBack(holderNumber)
+// card back is now removed in playCard, before the move to the centre
+
+let arr = Players[holderNumber].leads
+let x = cardNumber
+Players[holderNumber].leads = arr.filter(n=> n!==x)
+
+
+
+
 	}
 
 

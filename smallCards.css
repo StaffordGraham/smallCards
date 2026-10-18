@@ -37,7 +37,7 @@
     /* Pointillist pink background */
     background-image: radial-gradient(circle, white 10%, transparent 11%);
     background-size: 4px 4px;
-    background-color: #ffb6c179; /* soft pink base */
+    background-color: #ffb6c1; /* soft pink base - opaque, so the green table can't show through */
     background-clip: content-box;
 }
 
@@ -472,3 +472,66 @@ width: 1600px;
 
 
 
+
+/* Coach panel: hints and explanations at key plays (Coach.js) */
+#coachPanel {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  width: min(500px, calc(100vw - 32px));
+  max-height: 50vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 16px 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  font-family: sans-serif;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+}
+
+#coachPanel h3 {
+  margin: 0 0 8px 0;
+  color: #02652A;
+}
+
+#coachPanel p {
+  margin: 0 0 12px 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+#coachButton {
+  align-self: flex-end;
+  padding: 10px 20px;
+  font-size: 1rem;
+}
+
+#coachToast {
+  position: fixed;
+  left: 50%;
+  top: 40%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  background: white;
+  color: #02652A;
+  font: bold 1.2rem sans-serif;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.4);
+  z-index: 10000;
+  pointer-events: none;
+}
+
+/* Wrong card at a key play: shake it in the hand */
+@keyframes coachShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px); }
+  40%, 80% { transform: translateX(8px); }
+}
+
+.shake {
+  animation: coachShake 0.4s;
+}

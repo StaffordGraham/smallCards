@@ -28,6 +28,7 @@ class Deal{
         this.description=data?.description || "";  
         this.page=data?.page || "";
         this.commentary=data?.commentary || "";
+        this.checkpoints=data?.checkpoints || [];
         const st=this.contract
         const parts=st.split(" ");
         this.bidLevel=parseInt(parts[0],10);

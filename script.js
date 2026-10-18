@@ -182,6 +182,7 @@ function testFunction(){
  
 function takeBackTrick(){
   restoringTrick=true
+  resetCoach()
   let tbtTempList = Players[1].leads
   let TL = Tricks.length
   let trk = Tricks[Tricks.length - 1];
@@ -371,7 +372,6 @@ overlay.style.display='flex'
 };
 
 function disableTrickButtons(){
-    console.log('disableTrickButtons')
 
    const controls = document.getElementById("trickControls");
     controls.style.pointerEvents = "none";
@@ -673,10 +673,10 @@ function load_DealFromLibrary(dealIndex){
             document.getElementById('libraryOverlay').classList.add('hidden');
             closeAllModals()
             exitTeachingMode()
-            
-          
+            resetCoach()
+            validateCheckpoints(thedeal)
 
-            populateGame(thedeal)            
+            populateGame(thedeal)
             displayCards()
             showContract()
 
@@ -815,7 +815,6 @@ scoopTrickGuard=false;
 
 // 
 async function showBackCard(){
-  console.log('Im using the function showBackCard')
 
   
   if (showBackCardGuard) return;
@@ -914,7 +913,6 @@ function safeRAF(fn) {
 }
 
  function closeAllModals(){
-    console.log('closeAllModals')
 
   // document.getElementById('welcomeScreen').style.display = 'none';
   document.getElementById('contractScreenOverlay').style.display = 'none';
@@ -1050,8 +1048,8 @@ devCounter+=1
    Players.push(North);
    Players.push(East);
 
-  
-           populateGame(theDeal)            
+           resetCoach()
+           populateGame(theDeal)
            displayCards()
            showContract()
 }

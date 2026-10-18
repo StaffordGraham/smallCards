@@ -128,10 +128,10 @@ removeCardBack(holderNumber){
 	let backImages=[]
 	switch(holderNumber){
 		case 1:
-			backImages = document.querySelectorAll('img[data-side="West"]');
+			backImages = document.querySelectorAll('.cardBack[data-side="West"]');
 			break
 		case 3:
-			backImages= document.querySelectorAll('img[data-side="East"]');
+			backImages= document.querySelectorAll('.cardBack[data-side="East"]');
 			break;
 	}
 
@@ -383,6 +383,7 @@ if (backImages.length > 0) {
 
         const div = document.createElement("div");
         div.className = "card cardBack";
+        div.setAttribute("data-side", "West");
 
         const topPos = startY + index * overlapY;
 
@@ -414,6 +415,7 @@ if (backImages.length > 0) {
 
         const div = document.createElement("div");
         div.className = "card cardBack";
+        div.setAttribute("data-side", "East");
 
         const topPos = startY + index * overlapY;
 
@@ -836,7 +838,7 @@ renderSuit(cards, metrics, topPosition, holderNumber) {
         div.style.position="absolute";
         div.style.left=leftPos+"px"
         div.style.top=northOffset+"px";
-		div.addEventListener("click", this.cardPlayEventListener,{once:true});
+		div.addEventListener("click", this.cardPlayEventListener);
         imageContainer.appendChild(div)
         index++
         }
