@@ -102,9 +102,7 @@ addCard(crd){//start addCard
 					let previousTricks = (myIndex === -1) ? Tricks : Tricks.slice(0, myIndex)
 					let previousOccurrences = previousTricks.filter(t => t !== this && t.leadSuit === this.leadSuit).length
 					this.suitOccurrence = previousOccurrences + 1
-					console.log('[suitOccurrence] Lead suit:', this.leadSuit)
-					console.log('[suitOccurrence] Previous occurrences:', previousOccurrences)
-					console.log('[suitOccurrence] suitOccurrence:', this.suitOccurrence)
+					
 
 						//end if
 				}

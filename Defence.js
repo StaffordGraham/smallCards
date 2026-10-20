@@ -980,6 +980,7 @@ function discard(holderNumber){
       lowestValue=testValue
       bestDiscardSuit=i
     }
+    console.log('content of bestDiscardSuit ',Players[holderNumber].Suits[bestDiscardSuit])
   }
     let result= Math.min(...Players[holderNumber].Suits[bestDiscardSuit])
     return result
