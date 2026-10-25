@@ -9,7 +9,13 @@
             "isBackground": true,
             "problemMatcher": {
                 "owner": "serve",
-                "pattern": { "regexp": "^__no_problems__$" },
+                // serve.py reports no problems: this pattern never matches, but VS Code requires one
+                "pattern": {
+                    "regexp": "^__no_problems__(.*):(\\d+):(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "message": 3
+                },
                 "background": {
                     "activeBegins": true,
                     "beginsPattern": "^__no_problems__$",

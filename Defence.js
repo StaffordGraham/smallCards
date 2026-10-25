@@ -94,6 +94,10 @@ function shouldITrump(){
 if(flag)
 {flag=flag}
 let answer=true
+if(Deals[Deals.length-1].bidSuit=='N'){
+  answer = false
+  return answer
+}
 Suits=["S","H","D","C"]
 
 PN=Tricks[Tricks.length-1].toPlay

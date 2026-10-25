@@ -19,8 +19,9 @@
     <div id="libraryOverlay" class="overlay hidden">
       <div id="libraryScreen" class="library-modal modal">
         <div class="library-picker">
-          <label for="dealLibrarySelect">Deal Library</label>
-          <select id="dealLibrarySelect"></select>
+          <button id="selectLibraryBtn">Select Deal Library</button>
+          <span>Current Library:</span>
+          <span id="libraryPath">No deal library selected</span>
         </div>
         <h2 id="libraryTitle">Mendelson Winning Ways to Play Your Cards</h2>
         <div class="library-table-container">
@@ -101,6 +102,8 @@
 <div id="score-circle" class = "score-label north-south"></div>
 <div id="score-ns" class="score-label north-south"></div>
 <div id="score-ew" class="score-label east-west"></div>
+<!-- The deal library file in use (DealLibraries.js) -->
+<div id="libraryPathLabel"></div>
 <!-- Part VI : Scripts  -->
 <script src="Suit.js" ></script>
 <script src="Card.js"></script>

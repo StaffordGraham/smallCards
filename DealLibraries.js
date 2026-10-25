@@ -1,17 +1,18 @@
-// DEAL LIBRARIES
-// Every .js file in DEFAULT_LIBRARY_FOLDER is a deal library, in the format InstructConstruct saves:
+// DEAL LIBRARY
+// The deal library is one .js file, chosen with the Select Deal Library button, in the format InstructConstruct saves:
 //     const libDeals = [ {deal}, {deal}, ... ]
 // ("var" or "let" also work, and a trailing module.exports line is ignored).
 //
-// Each time the library screen opens, the folder is listed again and the chosen library re-read,
-// so libraries and hands just saved by InstructConstruct appear without changing anything here.
+// The file dialog opens in DEFAULT_LIBRARY_FOLDER. The chosen file's full path is shown on the library
+// screen and in the main window, and remembered (localStorage) so the same file opens next time.
+// The file is re-read each time the library screen opens, so hands just saved by InstructConstruct appear.
 //
-// A web page cannot list a folder, so the app must be served by serve.py (python serve.py),
-// which reads DEFAULT_LIBRARY_FOLDER from this file and serves the folder at /<folder name>/.
+// A web page cannot open a file dialog in a given folder or learn a file's full path, so the app must be
+// served by serve.py (python serve.py), which shows the dialog and reads the file.
 
 const DEFAULT_LIBRARY_FOLDER = "C:\\Users\\sgcam\\Projects\\DealLibraries"
 
-// Optional headings shown above the deal list; any other library is headed by its file name
+// Optional headings shown above the deal list, by file name; any other library is headed by its file name
 const LIBRARY_TITLES = {
   dealLibrary:          "Mendelson Winning Ways to Play Your Cards",
   funBridgeDealLibrary: "FunBridge Deals"
@@ -19,53 +20,29 @@ const LIBRARY_TITLES = {
 
 // All deal browsing, selection and loading reads from currentLibrary
 var currentLibrary = []
-var currentLibraryInfo = null
+var currentLibraryInfo = null   // {path, title} of the loaded library file
 
-let dealLibraries = []         // {id, file, title} for each library file in the folder
-const LIBRARY_STORAGE_KEY = "smallCards.dealLibrary"
+const LIBRARY_STORAGE_KEY = "smallCards.dealLibraryPath"
+const NOT_SERVED_MESSAGE = "Deal libraries can only be loaded when smallCards is started with:\n" +
+                           "    python serve.py\nthen open http://localhost:5502"
 let libraryRequest = 0
+let promptedForLibrary = false
 
-function findLibraryInfo(id){
-  return dealLibraries.find(lib => lib.id === id)
-}
-
-// The route serve.py serves DEFAULT_LIBRARY_FOLDER on: /<folder name>/
-function libraryFolderUrl(){
-  return "/" + DEFAULT_LIBRARY_FOLDER.split("\\").pop() + "/"
-}
-
-// Asks serve.py which library files are in the folder
-function listDealLibraries(){
-  return fetch(libraryFolderUrl(), { cache: "no-store" })
-    .then(response => response.json())
-    .catch(() => null)
-    .then(listing => {
-      if (!listing || !Array.isArray(listing.files)){
-        throw new Error("The deal library folder cannot be listed.\n\n" +
-                        "Start smallCards with:  python serve.py\nthen open http://localhost:5502")
-      }
-      if (!listing.found){
-        throw new Error("The deal library folder was not found:\n" + DEFAULT_LIBRARY_FOLDER)
-      }
-      if (listing.files.length === 0){
-        throw new Error("There are no deal library (.js) files in\n" + DEFAULT_LIBRARY_FOLDER)
-      }
-      return listing.files.map(file => {
-        const id = file.replace(/\.js$/i, "")
-        return { id: id, file: file, title: LIBRARY_TITLES[id] || id }
-      })
-    })
+function libraryInfo(path){
+  const name = path.split("\\").pop().replace(/\.js$/i, "")
+  return { path: path, title: LIBRARY_TITLES[name] || name }
 }
 
 // Reads a library file and returns its libDeals array.
 // The file runs inside its own function, so its const/let/var and module.exports
 // never clash with the page or with another library.
-function loadDealLibrary(info){
-  return fetch(libraryFolderUrl() + encodeURIComponent(info.file), { cache: "no-store" })
+function loadDealLibrary(path){
+  return fetch("/library/file?path=" + encodeURIComponent(path), { cache: "no-store" })
+    .catch(() => { throw new Error(NOT_SERVED_MESSAGE) })
     .then(response => {
-      if (!response.ok){
-        throw new Error("Could not load " + info.file + " from the deal library folder\n" + DEFAULT_LIBRARY_FOLDER)
-      }
+      if (!response.headers.get("X-SmallCards")){ throw new Error(NOT_SERVED_MESSAGE) }
+      if (response.status === 404){ throw new Error("The deal library file does not exist:\n" + path) }
+      if (!response.ok){ throw new Error("Could not load the deal library file\n" + path + "\n\n" + response.statusText) }
       return response.text()
     })
     .then(text => {
@@ -74,71 +51,74 @@ function loadDealLibrary(info){
         deals = new Function("module", "exports",
           text + "\nreturn typeof libDeals === 'undefined' ? undefined : libDeals")({ exports: {} }, {})
       } catch (e) {
-        throw new Error(info.file + " could not be read:\n" + e.message)
+        throw new Error(path + "\nis not a valid deal library:\n" + e.message)
       }
-      if (!Array.isArray(deals)){
-        throw new Error(info.file + " does not define libDeals = [...]")
+      if (!Array.isArray(deals) || deals.some(deal => !deal || typeof deal !== "object")){
+        throw new Error(path + "\nis not a valid deal library: it does not define libDeals = [ {deal}, ... ]")
       }
       return deals
     })
 }
 
-// Makes the given library the current one and refreshes every deal list
-function selectDealLibrary(id){
+// Loads the library file at path and makes it the current one.
+// If it cannot be loaded, the error is shown and the current library is left unchanged.
+function openDealLibrary(path){
   const request = ++libraryRequest
-  const info = findLibraryInfo(id)
-  return loadDealLibrary(info).then(deals => {
-    if (request !== libraryRequest){ return }   // a later selection has superseded this one
+  return loadDealLibrary(path).then(deals => {
+    if (request !== libraryRequest){ return }   // a later request has superseded this one
     currentLibrary = deals
-    currentLibraryInfo = info
-    try { localStorage.setItem(LIBRARY_STORAGE_KEY, id) } catch (e) { /* storage unavailable */ }
+    currentLibraryInfo = libraryInfo(path)
+    try { localStorage.setItem(LIBRARY_STORAGE_KEY, path) } catch (e) { /* storage unavailable */ }
     refreshLibraryViews()
   }).catch(err => {
     if (request !== libraryRequest){ return }
     console.error(err)
     alert(err.message)
-    refreshLibraryViews()   // put the drop-down back to the library still in use
+    refreshLibraryViews()
   })
 }
 
-// Lists the folder again, then re-reads the current (or remembered, or first) library
+// Select Deal Library: Windows file dialog (shown by serve.py), then load the chosen file
+function chooseDealLibrary(){
+  promptedForLibrary = true
+  return fetch("/library/choose", { cache: "no-store" })
+    .then(response => {
+      if (!response.headers.get("X-SmallCards")){ throw new Error(NOT_SERVED_MESSAGE) }
+      return response.json()
+    })
+    .catch(err => { throw new Error(err.message === NOT_SERVED_MESSAGE ? err.message : NOT_SERVED_MESSAGE) })
+    .then(choice => {
+      if (choice.path){ return openDealLibrary(choice.path) }   // null: dialog cancelled, keep the current library
+    })
+    .catch(err => {
+      console.error(err)
+      alert(err.message)
+    })
+}
+
+// Re-reads the current library, or opens the one remembered from last time,
+// or (first time only) asks for one
 function refreshDealLibraries(){
-  const request = ++libraryRequest
-  return listDealLibraries().then(libraries => {
-    if (request !== libraryRequest){ return }
-    dealLibraries = libraries
-    fillLibrarySelect()
-
-    let id = currentLibraryInfo && currentLibraryInfo.id
-    if (!findLibraryInfo(id)){
-      try { id = localStorage.getItem(LIBRARY_STORAGE_KEY) } catch (e) { /* storage unavailable */ }
-    }
-    if (!findLibraryInfo(id)){ id = dealLibraries[0].id }
-    return selectDealLibrary(id)
-  }).catch(err => {
-    if (request !== libraryRequest){ return }
-    console.error(err)
-    alert(err.message)
-  })
-}
-
-function fillLibrarySelect(){
-  const select = document.getElementById("dealLibrarySelect")
-  select.innerHTML = ""
-  dealLibraries.forEach(lib => {
-    const option = document.createElement("option")
-    option.value = lib.id
-    option.textContent = lib.id
-    select.appendChild(option)
-  })
+  let path = currentLibraryInfo && currentLibraryInfo.path
+  if (!path){
+    try { path = localStorage.getItem(LIBRARY_STORAGE_KEY) } catch (e) { /* storage unavailable */ }
+  }
+  if (path){ return openDealLibrary(path) }
+  refreshLibraryViews()
+  if (!promptedForLibrary){ return chooseDealLibrary() }
 }
 
 function refreshLibraryViews(){
-  const select = document.getElementById("dealLibrarySelect")
-  if (select && currentLibraryInfo){ select.value = currentLibraryInfo.id }
+  const path = currentLibraryInfo ? currentLibraryInfo.path : "No deal library selected"
+
+  const pathText = document.getElementById("libraryPath")
+  if (pathText){ pathText.textContent = path }
+
+  const pathLabel = document.getElementById("libraryPathLabel")
+  if (pathLabel){ pathLabel.textContent = "Library: " + path }
 
   const title = document.getElementById("libraryTitle")
-  if (title && currentLibraryInfo){ title.textContent = currentLibraryInfo.title }
+  if (title){ title.textContent = currentLibraryInfo ? currentLibraryInfo.title : "" }
 
   if (typeof populateLibraryTable === "function"){ populateLibraryTable() }
 }
@@ -151,10 +131,9 @@ function getRandomLibraryDeal(){
   return currentLibrary[Math.floor(Math.random() * currentLibrary.length)]
 }
 
-// The libraries are first read when script.js shows the library screen (showLibraryScreen)
+// The library is first read when script.js shows the library screen (showLibraryScreen)
 function initDealLibraries(){
-  const select = document.getElementById("dealLibrarySelect")
-  select.addEventListener("change", () => selectDealLibrary(select.value))
+  document.getElementById("selectLibraryBtn").addEventListener("click", chooseDealLibrary)
 }
 
 document.addEventListener("DOMContentLoaded", initDealLibraries)

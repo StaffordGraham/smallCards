@@ -543,7 +543,25 @@ width: 1600px;
   font-size: 1.1em;
 }
 
-.library-picker select {
+.library-picker button {
   font-size: 1em;
   padding: 4px 8px;
+}
+
+#libraryPath {
+  font-family: monospace;
+  word-break: break-all;
+}
+
+/* The deal library file in use, always visible in the main window */
+#libraryPathLabel {
+  position: fixed;
+  left: 8px;
+  bottom: 4px;
+  padding: 2px 6px;
+  font-size: small;
+  font-family: monospace;
+  color: #eee;
+  background-color: #02652A;
+  z-index: 10;
 }
