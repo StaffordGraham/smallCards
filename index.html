@@ -18,7 +18,11 @@
 
     <div id="libraryOverlay" class="overlay hidden">
       <div id="libraryScreen" class="library-modal modal">
-        <h2>Mendelson Winning Ways to Play Your Cards</h2>
+        <div class="library-picker">
+          <label for="dealLibrarySelect">Deal Library</label>
+          <select id="dealLibrarySelect"></select>
+        </div>
+        <h2 id="libraryTitle">Mendelson Winning Ways to Play Your Cards</h2>
         <div class="library-table-container">
         <table id="libraryTable">
           <colgroup>
@@ -108,7 +112,7 @@
  <script src = "Score.js"></script>
  <script src="clsScore.js" ></script>
    <script src = "Defence.js"></script>
-   <script src ="dealLibrary.js"></script>
+   <script src="DealLibraries.js"></script>
    <script src="Coach.js"></script>
    <script src="script.js"></script>
    <script src="Routines.js"></script>

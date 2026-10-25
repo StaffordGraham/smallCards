@@ -1,5 +1,5 @@
 //START DEAL LIST
-const libDeals = [
+var libDeals = [
     {
         "name": "Basic Play",
         "description": "Trumping Losers in hand on dummy's trumps\t",

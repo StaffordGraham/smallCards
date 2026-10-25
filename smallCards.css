@@ -535,3 +535,15 @@ width: 1600px;
 .shake {
   animation: coachShake 0.4s;
 }
+
+.library-picker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1em;
+}
+
+.library-picker select {
+  font-size: 1em;
+  padding: 4px 8px;
+}

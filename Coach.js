@@ -1,6 +1,6 @@
 // Coach.js
 // Mid-hand correction at the key decision points of a lesson.
-// Key points are stored with each lesson in dealLibrary.js as "checkpoints":
+// Key points are stored with each lesson in the deal library files (see DealLibraries.js) as "checkpoints":
 //
 //   "checkpoints": [
 //     {

@@ -147,7 +147,6 @@ var Scores = [];
 var Deals = [];
 let Players =[];
 var Files = [];
-var dealLibrary=[]
 var suitsPlayed=[]
 var showCards=false;
 const playerNames =["South","West","North","East"]
@@ -297,7 +296,7 @@ function populateLibraryTable() {
   tableBody.innerHTML = ""; // clear existing rows
 
 
-  libDeals.forEach((hand, index) => {
+  currentLibrary.forEach((hand, index) => {
     const row = document.createElement("tr");
     
     
@@ -663,7 +662,7 @@ function load_DealFromLibrary(dealIndex){
     flag=flag
   }
     
-            const dealData=libDeals[dealIndex]
+            const dealData=getLibraryDeal(dealIndex)
             let deal = new Deal(dealData)
             
             Deals.push(deal)
