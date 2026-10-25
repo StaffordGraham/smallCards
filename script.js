@@ -321,6 +321,7 @@ function showLibraryScreen() {
   const libraryOverlay = document.getElementById("libraryOverlay");
   libraryOverlay.classList.remove("hidden");
   populateLibraryTable();
+  refreshDealLibraries();   // pick up libraries and hands saved since the screen was last shown
 }
 function hideWelcomeScreen() {
   const welcomeOverlay = document.getElementById("welcomeOverlay");
@@ -354,6 +355,7 @@ function returnToLibrary(){
   document.getElementById("scoreOverlay").classList.add("hidden");
   document.getElementById("libraryOverlay").classList.remove("hidden");
     document.getElementById("background-overlay").style.display = "none";   // ← add this
+  refreshDealLibraries();
 
 }
 

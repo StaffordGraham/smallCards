@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            // serve.py: smallCards plus a listing of the deal library folder
+            "label": "Serve smallCards",
+            "type": "shell",
+            "command": "python serve.py",
+            "isBackground": true,
+            "problemMatcher": {
+                "owner": "serve",
+                "pattern": { "regexp": "^__no_problems__$" },
+                "background": {
+                    "activeBegins": true,
+                    "beginsPattern": "^__no_problems__$",
+                    "endsPattern": "^smallCards server"
+                }
+            }
+        }
+    ]
+}
