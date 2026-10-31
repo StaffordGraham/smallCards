@@ -185,24 +185,18 @@ function takeBackTrick(){
   let tbtTempList = Players[1].leads
   let TL = Tricks.length
   let trk = Tricks[Tricks.length - 1];
-  let scr=Scores[Scores.length-1]
-  if (trk.winningPlayer % 2 === 0) {
-    // East‑West
-    scr.eastWestTricks -= 1;
-} else {
-    // North‑South
-    scr.northSouthTricks -= 1;
-}
+  // No score to undo: the trick on the table is only scored when Next collects it (trickOver)
 let crds = trk.cardArray;   // array of Card objects
 crds.forEach(crd => {
     Players[crd.holderNumber].addCard(crd.cardNumber);
 });
 
-//replace west_leads and east-leads
+//replace west's and east's planned leads (a Deal stores them as w_leads and e_leads)
 let theDeal =Deals[Deals.length-1]
+const dealLeads = { 1: theDeal.w_leads || [], 3: theDeal.e_leads || [] }
 crds.forEach(crd=>{
-  let x =crd.cardNumber
-  if (theDeal.west_leads.includes(x)){
+  let x =Number(crd.cardNumber)
+  if ((dealLeads[crd.holderNumber] || []).includes(x)){
     Players[crd.holderNumber].leads.unshift(x)
   }
 
@@ -267,7 +261,11 @@ flagButton.addEventListener('click', function() {
 document.addEventListener("DOMContentLoaded", function() {
   domLoadfunc()
   eventHandlersFunc()
-  showLibraryScreen()
+  if (isPlayTest()){
+    startPlayTest()       // opened by ConstructInstruct (PlayTest.js)
+  } else {
+    showLibraryScreen()
+  }
  
 });
 let homeButton = document.getElementById("homeButton")
@@ -347,6 +345,9 @@ function clearDisplayedCards(scoreMessage){
 
     const cardBacks=document.querySelectorAll('.cardBack')
     cardBacks.forEach(image=>image.remove())
+
+    // East and West face up (Show All Hands, PlayTest.js)
+    document.querySelectorAll('.sideCard').forEach(card=>card.remove())
 
 }
 
@@ -982,7 +983,8 @@ function resetDeal() {
 
     // 2. Remove ALL card DOM nodes (removes DOM references)
     const container = document.getElementById("imageContainer");
-    container.querySelectorAll("img").forEach(img => img.remove());
+    // Cards are drawn as div.card (hands, table, backs), older ones as img
+    container.querySelectorAll("img, .card").forEach(img => img.remove());
 
     // 3. Remove ALL event listeners by cloning any remaining nodes
     // (safety net — should be empty after removal above)

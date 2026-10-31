@@ -637,7 +637,9 @@ if (index !==-1){
 	 }
 	 let crd=new Card(cardNumber,holderNumber)
 	 Tricks[Tricks.length-1].addCard(crd);
-	
+	 // No Back or Next while the card is moving: either one mid-move upsets the hands
+	 disableTrickButtons()
+
 	const imageContainer=document.getElementById("imageContainer")
 if (flag){
 	flag=flag
@@ -650,6 +652,7 @@ if (flag){
 		defenderCardonTable(metrics,cardNumber,holderNumber)
 		// remove the card back as the face appears, before the move to the centre
 		Players[holderNumber].removeCardBack(holderNumber)
+		Players[holderNumber].removeFaceUpCard(cardNumber)   // when Show All Hands is on
 
 	}
 	else{
@@ -676,14 +679,15 @@ if (flag){
 	
 		
 		tempAutos[holderNumber].push(cardNumber)
-		if (Tricks[Tricks.length-1].cardArray.length==4)
+		// As before: available once the first trick is complete, and from then on
+		if (Tricks[Tricks.length-1].cardArray.length==4 || Tricks.length > 1)
 		{
 					enableTrickButtons()
 
-			
-			
+
+
 		}
-		  newContinuePlay(); 
+		  newContinuePlay();
 	
 	 
 		 
@@ -877,6 +881,10 @@ async function  handOver(){
 	if (flag===true){
 		flag=flag
 	}
+	// Run once per hand: newContinuePlay can call again during the pauses below,
+	// which scored the last trick twice
+	if (handOverGuard){ return }
+	handOverGuard=true
 	let winningPlayer=Tricks[Tricks.length-1].winningPlayer
       Scores[Scores.length-1].scoreTrick(winningPlayer)
       document.getElementById('nsTricks').innerText="Tricks: " + Scores[Scores.length-1].northSouthTricks;
@@ -909,6 +917,7 @@ async function  handOver(){
 
 
 handOverGuard=true;
+playTestHandOver()   // reports the hand to ConstructInstruct in play-test mode (PlayTest.js)
 showModal('scoreOverlay')
 
 }

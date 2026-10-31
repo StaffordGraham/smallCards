@@ -14,6 +14,7 @@
     transform: none;
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
     font-size: 3vw;
+    container-type: inline-size;   /* corner letters below are sized from this card's width */
   font-family: "Apple Symbols", "Segoe UI Symbol", "Arial Unicode MS", sans-serif;    font-weight: 700;
 
 }
@@ -49,9 +50,11 @@
     position: absolute;
   top: 0;
     left: 0;
-    font-size: 2em;
+    font-size: 2em;            /* browsers without container units */
+    font-size: 28cqw;          /* fits the strip an overlapped card shows */
     font-weight: bold;
-    line-height: 0.7;
+    line-height: 0.95;
+    letter-spacing: -0.08em;   /* keeps "10" inside the strip */
     padding: 0.1em;
 }
 
@@ -62,9 +65,11 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    font-size: 2em;
+    font-size: 2em;            /* browsers without container units */
+    font-size: 28cqw;          /* fits the strip an overlapped card shows */
     font-weight: bold;
-    line-height: 0.7;
+    line-height: 0.95;
+    letter-spacing: -0.08em;   /* keeps "10" inside the strip */
     transform: rotate(180deg);
     padding: 0.1em;
 }
@@ -564,4 +569,39 @@ width: 1600px;
   color: #eee;
   background-color: #02652A;
   z-index: 10;
+}
+
+/* Play-test mode (PlayTest.js): opened by ConstructInstruct, which supplies the deal */
+#playTestBar {
+  position: fixed;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 14px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.35);
+  border-radius: 6px;
+  z-index: 10001;      /* above the overlays, so the result message shows on the score screen */
+}
+
+#playTestBar button {
+  font-size: 14px;
+  padding: 3px 10px;
+  cursor: pointer;
+}
+
+#playTestName {
+  font-weight: bold;
+}
+
+/* No library in play-test mode: ConstructInstruct sends the next deal */
+body.playtest #libraryPathLabel,
+body.playtest #nextDealButton,
+body.playtest #homeButton {
+  display: none;
 }

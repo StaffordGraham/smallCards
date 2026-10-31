@@ -780,7 +780,7 @@ renderSuit(cards, metrics, topPosition, holderNumber) {
 			break;
 		case "East":
 			if (showCards){
-				this.oldEastDisplay(metrics)
+				this.faceUpSideDisplay(metrics)
 			}
 			else{
 					this.eastDisplayMobile(metrics,this.fullHand);
@@ -789,7 +789,7 @@ renderSuit(cards, metrics, topPosition, holderNumber) {
 			break
 		case "West":
 			if (showCards){
-				this.oldWestDisplay(metrics)
+				this.faceUpSideDisplay(metrics)
 			}
 			else{
 			this.westDisplay(metrics,this.fullHand);
@@ -805,6 +805,53 @@ renderSuit(cards, metrics, topPosition, holderNumber) {
 	/// end switch statement
 	
 	}//end displayhand
+
+	// Show All Hands (PlayTest.js): East or West face up, one row per suit.
+	// The cards cannot be clicked: Defence.js still plays for the defenders.
+	faceUpSideDisplay(metrics, leaveOut = null){
+		const scale = 0.75
+		const cardWidth = metrics.cardWidth * scale
+		const cardHeight = metrics.cardHeight * scale
+		const step = metrics.overlap * scale
+		const gap = cardHeight * 0.12
+		const rect = imageContainer.getBoundingClientRect()
+		const rows = [this.Spades, this.Hearts, this.Diamonds, this.Clubs]
+			.map(row => row.filter(cardNumber => cardNumber !== leaveOut)
+				.sort((a, b) => b - a))     // high to low (Defence.js may re-sort the suits)
+		const longest = Math.max(1, ...rows.map(row => row.length))
+		const blockWidth = cardWidth + step * (longest - 1)
+		// the container is 100vw wide, so its right edge can be under the scrollbar
+		const right = Math.min(rect.width, document.documentElement.clientWidth) - 20
+		const left = this.Position === "West" ? 8 : right - 8 - blockWidth
+		let top = (window.innerHeight - (4 * cardHeight + 3 * gap)) / 2
+		for (const row of rows){
+			row.forEach((cardNumber, i) => {
+				const card = new Card(cardNumber, this.holderNumber)
+				const div = document.createElement("div")
+				div.className = "card sideCard"
+				div.setAttribute("data-rank", card.face)
+				div.setAttribute("data-suit", card.suitSymbol)
+				div.setAttribute("data-side", this.Position)
+				div.setAttribute("cardNumber", card.cardNumber)
+				div.style.width = cardWidth + "px"
+				div.style.height = cardHeight + "px"
+				div.style.fontSize = (3 * scale) + "vw"
+				div.style.left = left + i * step + "px"
+				div.style.top = top + "px"
+				imageContainer.appendChild(div)
+			})
+			top += cardHeight + gap
+		}
+	}
+
+	// A defender's card has been played: draw the face-up hand again without it
+	// (the card leaves this.Suits only after it reaches the table)
+	removeFaceUpCard(cardNumber){
+		const shown = document.querySelectorAll(`.sideCard[data-side="${this.Position}"]`)
+		if (shown.length === 0){ return }
+		shown.forEach(el => el.remove())
+		this.faceUpSideDisplay(this.computeLayoutMetrics(imageContainer), Number(cardNumber))
+	}
 	///******NORTH DISPLAY******
 
 	northDisplay(metrics,cardNumbers){
