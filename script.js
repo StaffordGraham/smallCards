@@ -1021,7 +1021,6 @@ function reLoadLastDeal(){
 
 devCounter+=1
   resetDeal()
-  console.log("afterResetDeal")
  
   
 
